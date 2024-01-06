@@ -10,4 +10,12 @@
 </style>
 <script setup>
 import MainHeader from "@/components/header/MainHeader.vue";
+import { onMounted } from "vue";
+import { useLocaleStore } from "@/store/Locale";
+
+const localeStore = useLocaleStore();
+
+onMounted(() => {
+  localeStore.fetchLocales();
+});
 </script>

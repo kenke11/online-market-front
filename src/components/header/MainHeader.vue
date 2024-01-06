@@ -4,8 +4,8 @@
       <div class="flex h-16 justify-between">
         <DesktopNavBar />
         <SearchBar />
-        <MobileBurgerBar :open="open" />
         <LanguageBar />
+        <MobileBurgerBar :open="open" />
       </div>
     </div>
 

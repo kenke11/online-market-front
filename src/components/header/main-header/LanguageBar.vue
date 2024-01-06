@@ -1,11 +1,11 @@
 <template>
-  <div class="hidden lg:ml-4 lg:flex lg:items-center">
+  <div class="mr-4 lg:mr-0 lg:mx-4 flex items-center">
     <Menu as="div" class="relative ml-4 flex-shrink-0">
       <div>
         <MenuButton
-          class="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          class="relative flex rounded-sm bg-white text-sm focus:outline-none uppercase"
         >
-          EN
+          {{ currentLanguageName }}
         </MenuButton>
       </div>
       <transition
@@ -17,17 +17,15 @@
         leave-to-class="transform opacity-0 scale-95"
       >
         <MenuItems
-          class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
         >
-          <MenuItem v-slot="{ active }">
-            <a
-              href="#"
-              :class="[
-                active ? 'bg-gray-100' : '',
-                'block px-4 py-2 text-sm text-gray-700',
-              ]"
-              >English</a
+          <MenuItem v-for="(locale, index) in locales" :key="index">
+            <button
+              @click="changeLocale(locale.code)"
+              class="block px-4 py-2 text-sm text-gray-700 uppercase hover:bg-gray-100"
             >
+              {{ locale?.code }}
+            </button>
           </MenuItem>
         </MenuItems>
       </transition>
@@ -36,4 +34,32 @@
 </template>
 <script setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { ref, watch } from "vue";
+import { useLocaleStore } from "@/store/Locale";
+
+const localeStore = useLocaleStore();
+const locales = ref(localeStore.locales);
+const currentLanguageName = ref(localeStore.currentLocale);
+
+const changeLocale = (newLocale) => {
+  localStorage.setItem("locale", newLocale);
+  localeStore.currentLocale = locales.value.find(
+    (locale) => locale.code === newLocale
+  )?.code;
+  localeStore.setLocale();
+};
+
+watch(
+  () => localeStore.locales,
+  (newValue) => {
+    locales.value = newValue;
+  }
+);
+
+watch(
+  () => localeStore.currentLocale,
+  (newValue) => {
+    currentLanguageName.value = newValue;
+  }
+);
 </script>
