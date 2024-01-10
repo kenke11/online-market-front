@@ -3,22 +3,19 @@
     <ul role="list" class="flex flex-1 flex-col gap-y-7">
       <li>
         <ul role="list" class="-mx-2 space-y-1">
-          <li v-for="item in navigation" :key="item.name">
-            <a
-              v-if="!item.children"
-              :href="item.href"
+          <li v-for="category in categories" :key="category.id">
+            <router-link
+              v-if="!category?.sub_categories?.length"
+              to="name1"
               :class="[
-                item.current ? 'bg-gray-50' : 'hover:bg-gray-50',
-                'block rounded-md py-2 pr-2 pl-10 text-sm leading-6 font-semibold text-gray-700',
+                'block rounded-md py-2 pr-2 pl-10 text-sm leading-6 font-semibold text-gray-700 hover:bg-gray-50',
               ]"
-              >{{ item.name }}</a
+              >{{ category.name[$i18n.locale] }}</router-link
             >
+
             <Disclosure as="div" v-else v-slot="{ open }">
               <DisclosureButton
-                :class="[
-                  item.current ? 'bg-gray-50' : 'hover:bg-gray-50',
-                  'flex items-center w-full text-left rounded-md p-2 gap-x-3 text-sm leading-6 font-semibold text-gray-700',
-                ]"
+                class="flex hover:bg-gray-50 items-center w-full text-left rounded-md p-2 gap-x-3 text-sm leading-6 font-semibold text-gray-700"
               >
                 <ChevronRightIcon
                   :class="[
@@ -27,18 +24,19 @@
                   ]"
                   aria-hidden="true"
                 />
-                {{ item.name }}
+                {{ category.name[$i18n.locale] }}
               </DisclosureButton>
               <DisclosurePanel as="ul" class="mt-1 px-2">
-                <li v-for="subItem in item.children" :key="subItem.name">
-                  <DisclosureButton
-                    as="a"
-                    :href="subItem.href"
+                <li
+                  v-for="subCategory in category?.sub_categories"
+                  :key="subCategory.id"
+                >
+                  <router-link
+                    to="name"
                     :class="[
-                      subItem.current ? 'bg-gray-50' : 'hover:bg-gray-50',
-                      'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700',
+                      'block hover:bg-gray-50 rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700',
                     ]"
-                    >{{ subItem.name }}</DisclosureButton
+                    >{{ subCategory.name[$i18n.locale] }}</router-link
                   >
                 </li>
               </DisclosurePanel>
@@ -53,26 +51,16 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { ChevronRightIcon } from "@heroicons/vue/20/solid";
+import { useCategoryStore } from "@/store/Category";
+import { ref, watch } from "vue";
 
-const navigation = [
-  {
-    name: "Teams",
-    current: false,
-    children: [
-      { name: "Engineering", href: "#" },
-      { name: "Human Resources", href: "#" },
-      { name: "Customer Success", href: "#" },
-    ],
-  },
-  {
-    name: "Projects",
-    current: false,
-    children: [
-      { name: "GraphQL API", href: "#" },
-      { name: "iOS App", href: "#" },
-      { name: "Android App", href: "#" },
-      { name: "New Customer Portal", href: "#" },
-    ],
-  },
-];
+const categoryStore = useCategoryStore();
+const categories = ref(categoryStore.categories);
+
+watch(
+  () => categoryStore.categories,
+  (newValue) => {
+    categories.value = newValue;
+  }
+);
 </script>

@@ -4,7 +4,7 @@
       <div class="flex-1 lg:flex lg:space-x-4 pb-6">
         <SideNavigation />
         <div
-          class="bg-red-700 px-4 py-6 sm:px-6 lg:pl-8 md:flex-1 md:pl-6"
+          class="bg-red-700 px-4 h-fit py-6 sm:px-6 lg:pl-8 md:flex-1 md:pl-6"
         ></div>
       </div>
     </div>

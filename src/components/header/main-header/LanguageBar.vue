@@ -36,10 +36,12 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { ref, watch } from "vue";
 import { useLocaleStore } from "@/store/Locale";
+import { useI18n } from "vue-i18n";
 
 const localeStore = useLocaleStore();
 const locales = ref(localeStore.locales);
 const currentLanguageName = ref(localeStore.currentLocale);
+const { locale } = useI18n();
 
 const changeLocale = (newLocale) => {
   localStorage.setItem("locale", newLocale);
@@ -60,6 +62,7 @@ watch(
   () => localeStore.currentLocale,
   (newValue) => {
     currentLanguageName.value = newValue;
+    locale.value = newValue;
   }
 );
 </script>
