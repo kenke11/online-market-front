@@ -6,7 +6,7 @@
           <li v-for="category in categories" :key="category.id">
             <router-link
               v-if="!category?.sub_categories?.length"
-              to="name1"
+              :to="{ name: 'category', params: { slug: category.slug } }"
               :class="[
                 'block rounded-md py-2 pr-2 pl-10 text-sm leading-6 font-semibold text-gray-700 hover:bg-gray-50',
               ]"
@@ -27,12 +27,27 @@
                 {{ category.name[$i18n.locale] }}
               </DisclosureButton>
               <DisclosurePanel as="ul" class="mt-1 px-2">
+                <li>
+                  <router-link
+                    :to="{ name: 'category', params: { slug: category.slug } }"
+                    :class="[
+                      'block hover:bg-gray-50 rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700',
+                    ]"
+                    >{{ category.name[$i18n.locale] }}</router-link
+                  >
+                </li>
                 <li
                   v-for="subCategory in category?.sub_categories"
                   :key="subCategory.id"
                 >
                   <router-link
-                    to="name"
+                    :to="{
+                      name: 'sub_category',
+                      params: {
+                        categorySlug: category.slug,
+                        subCategorySlug: subCategory.slug,
+                      },
+                    }"
                     :class="[
                       'block hover:bg-gray-50 rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-700',
                     ]"
