@@ -25,7 +25,6 @@ export const useProductStore = defineStore("productStore", {
           `${process.env.VUE_APP_BACK_URL}api/products/filter/${category}`
         );
         this.filters = response.data.filters;
-        console.log(this.filters);
       } catch (e) {
         this.filters = [];
         console.error(e); // Use console.error for errors
