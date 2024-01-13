@@ -10,7 +10,7 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/:slug",
+    path: "/:categorySlug",
     name: "category",
     component: ProductListByCategoryView,
     props: true,

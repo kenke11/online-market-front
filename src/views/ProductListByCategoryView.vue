@@ -1,3 +1,7 @@
 <template>
-  <div>by category</div>
+  <ProductsList />
 </template>
+
+<script setup>
+import ProductsList from "@/components/product-list/ProductsList.vue";
+</script>
