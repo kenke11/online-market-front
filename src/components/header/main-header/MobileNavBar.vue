@@ -1,5 +1,5 @@
 <template>
-  <DisclosurePanel class="lg:hidden">
+  <DisclosurePanel class="lg:hidden absolute bg-white w-full">
     <NavMenu />
   </DisclosurePanel>
 </template>
