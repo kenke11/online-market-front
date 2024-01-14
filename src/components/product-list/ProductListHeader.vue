@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full py-4">
+  <div class="mx-auto w-full max-w-7xl grow lg:flex lg:px-2 py-4">
     <div
-      class="p-2 flex items-center justify-start space-x-2 text-xs lg:space-x-4"
+      class="p-2 w-full flex items-center justify-start space-x-2 text-xs lg:space-x-4"
     >
       <router-link
         :to="{ name: 'home' }"
