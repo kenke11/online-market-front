@@ -34,8 +34,10 @@
                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                     @click="
                       filtersChecked(
-                        specification.specification_description[$i18n.locale] ||
-                          specification.color_value
+                        filter.name['en'],
+                        specification.specification_description['en'] ||
+                          specification.color_value,
+                        $event.target.checked
                       )
                     "
                   />
@@ -60,15 +62,62 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { useProductStore } from "@/store/Product";
-import { ref, watch } from "vue";
+import { ref, watch, defineEmits } from "vue";
 import { ChevronRightIcon } from "@heroicons/vue/20/solid";
+import { useRoute } from "vue-router";
+
+const emit = defineEmits(["fetchProducts"]);
+
+const route = useRoute();
 
 const productStore = useProductStore();
 
 const filters = ref(productStore.filters);
+const qp = ref("");
 
-const filtersChecked = (value) => {
-  console.log(value);
+const filtersChecked = (key, value, target) => {
+  const queryParams = new URLSearchParams(qp.value);
+
+  if (target) {
+    addValueToQueryParam(queryParams, key, value);
+  } else {
+    removeValueFromQueryParam(queryParams, key, value);
+  }
+
+  updateQueryParam(qp, queryParams);
+};
+
+const addValueToQueryParam = (queryParams, key, value) => {
+  const currentValues = queryParams.getAll(key);
+  currentValues.push(value);
+  queryParams.set(key, currentValues);
+};
+
+const removeValueFromQueryParam = (queryParams, key, value) => {
+  const currentValues = queryParams.getAll(key);
+
+  if (currentValues.length === 0) {
+    return;
+  }
+
+  const updatedValues = currentValues
+    .flatMap((val) => val.split(","))
+    .filter((v) => v !== value);
+
+  if (updatedValues.length > 0) {
+    queryParams.set(key, updatedValues.join(","));
+  } else {
+    queryParams.delete(key);
+  }
+};
+
+const updateQueryParam = (qp, queryParams) => {
+  qp.value = "?" + queryParams.toString();
+  fetchProducts(qp.value);
+};
+
+const fetchProducts = (qp) => {
+  emit("fetchProducts", route.params, qp);
 };
 
 watch(

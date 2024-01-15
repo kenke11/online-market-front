@@ -49,7 +49,6 @@ watch(
   () => productStore.products,
   (newValue) => {
     products.value = newValue;
-    console.log(products.value);
   }
 );
 </script>

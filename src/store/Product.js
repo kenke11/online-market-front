@@ -8,11 +8,11 @@ export const useProductStore = defineStore("productStore", {
     filters: [],
   }),
   actions: {
-    async fetchProductsByCategory(category) {
+    async fetchProductsByCategory(category, qs) {
       this.products = [];
       try {
         const response = await axios.get(
-          `${process.env.VUE_APP_BACK_URL}api/products/category/${category}`
+          `${process.env.VUE_APP_BACK_URL}api/products/category/${category}${qs}`
         );
         this.products = response.data.products;
       } catch (e) {
@@ -32,11 +32,11 @@ export const useProductStore = defineStore("productStore", {
         console.error(e); // Use console.error for errors
       }
     },
-    async fetchProductsBySubCategory(category, subCategory) {
+    async fetchProductsBySubCategory(category, subCategory, qs) {
       this.products = [];
       try {
         const response = await axios.get(
-          `${process.env.VUE_APP_BACK_URL}api/products/category/${category}/sub-category/${subCategory}`
+          `${process.env.VUE_APP_BACK_URL}api/products/category/${category}/sub-category/${subCategory}${qs}`
         );
         this.products = response.data.products;
       } catch (e) {
