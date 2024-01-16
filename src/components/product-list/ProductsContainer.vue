@@ -13,7 +13,7 @@
             class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80"
           >
             <img
-              src="https://www.mrporter.com/variants/images/3633577411310824/in/w2000_q60.jpg"
+              :src="product?.picture_url"
               class="h-full w-full object-cover object-center lg:h-full lg:w-full"
             />
           </div>
@@ -43,12 +43,26 @@ import { ref, watch } from "vue";
 
 const productStore = useProductStore();
 
-const products = ref(productStore.products);
+const productsWithMainPicture = (item) => {
+  let mainPicture = null;
+  if (item.product_pictures) {
+    mainPicture = item.product_pictures.filter(
+      (picture) => picture.is_main === 1
+    )[0];
+  }
+
+  return {
+    ...item,
+    picture_url: `${process.env.VUE_APP_STORAGE_BACK_URL}${mainPicture?.picture_url}`,
+  };
+};
+
+const products = ref(productStore.products.map(productsWithMainPicture));
 
 watch(
   () => productStore.products,
   (newValue) => {
-    products.value = newValue;
+    products.value = newValue.map(productsWithMainPicture);
   }
 );
 </script>
