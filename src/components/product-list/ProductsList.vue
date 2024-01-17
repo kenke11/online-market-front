@@ -4,7 +4,7 @@
     <div class="mx-auto w-full max-w-7xl grow lg:flex lg:px-2">
       <div class="flex-1 lg:flex space-y-6 lg:space-y-0 lg:space-x-4 pb-6">
         <ProductFilter @fetchProducts="fetchProducts" :slugs="slugs" />
-        <ProductsContainer />
+        <ProductsContainer :categorySlugs="slugs.categorySlug" />
       </div>
     </div>
   </div>

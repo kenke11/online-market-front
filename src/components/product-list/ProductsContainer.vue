@@ -9,14 +9,26 @@
           :key="product.id"
           class="group relative"
         >
-          <div
-            class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80"
+          <router-link
+            :to="{
+              name: 'product',
+              params: {
+                categorySlug: categorySlug,
+                productSlug: product.slug,
+              },
+            }"
+            class="w-fit h-fit bg-red-700"
           >
-            <img
-              :src="product?.picture_url"
-              class="h-full w-full object-cover object-center lg:h-full lg:w-full"
-            />
-          </div>
+            <div
+              class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80"
+            >
+              <img
+                :src="product?.picture_url"
+                class="h-full w-full object-cover object-center lg:h-full lg:w-full"
+              />
+            </div>
+          </router-link>
+
           <div class="mt-4 flex justify-between">
             <div>
               <div class="text-sm font-medium text-gray-900">
@@ -24,7 +36,7 @@
               </div>
               <h3 class="text-sm text-gray-700">
                 <button>
-                  <span aria-hidden="true" class="absolute inset-0" />
+                  <span aria-hidden="true" class="inset-0" />
                   {{ product.name[$i18n.locale] }}
                 </button>
               </h3>
@@ -39,7 +51,14 @@
 
 <script setup>
 import { useProductStore } from "@/store/Product";
-import { ref, watch } from "vue";
+import { ref, watch, defineProps } from "vue";
+
+defineProps({
+  categorySlug: {
+    type: String,
+    required: true,
+  },
+});
 
 const productStore = useProductStore();
 

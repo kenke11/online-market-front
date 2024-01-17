@@ -4,6 +4,7 @@ import axios from "axios";
 export const useProductStore = defineStore("productStore", {
   id: "product",
   state: () => ({
+    product: [],
     products: [],
     filters: [],
   }),
@@ -53,6 +54,18 @@ export const useProductStore = defineStore("productStore", {
         this.filters = response.data.filters;
       } catch (e) {
         this.filters = [];
+        console.error(e); // Use console.error for errors
+      }
+    },
+    async fetchProductWithCategory(categorySlug, productSlug) {
+      this.product = [];
+      try {
+        const response = await axios.get(
+          `${process.env.VUE_APP_BACK_URL}api/products/category/${categorySlug}/product/${productSlug}`
+        );
+        this.product = response.data;
+      } catch (e) {
+        this.product = [];
         console.error(e); // Use console.error for errors
       }
     },
