@@ -2,7 +2,7 @@
   <div class="px-4 h-fit sm:px-6 lg:pl-8 md:flex-1 md:pl-6">
     <div class="bg-white">
       <div
-        class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+        class="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3 xl:gap-x-8"
       >
         <div
           v-for="product in products"
@@ -24,7 +24,7 @@
             >
               <img
                 :src="product?.picture_url"
-                class="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                class="w-full object-cover object-center lg:h-full lg:w-full"
               />
             </div>
           </router-link>

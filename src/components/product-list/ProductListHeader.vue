@@ -1,32 +1,36 @@
 <template>
-  <div class="mx-auto w-full max-w-7xl grow lg:flex lg:px-2 py-4">
-    <div
-      class="p-2 w-full flex items-center justify-start space-x-2 text-xs lg:space-x-4"
-    >
-      <router-link
-        :to="{ name: 'home' }"
-        class="px-2 py-1 pr-3 rounded-full hover:bg-gray-100 flex items-center space-x-2 font-bold text-base"
+  <div class="mx-auto w-full max-w-7xl grow py-6">
+    <nav>
+      <ol
+        role="list"
+        class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-5 h-5"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"
-          />
-        </svg>
-        <span>Main</span>
-      </router-link>
-      <div class="font-bold text-base py-1 pr-3">
-        <span>{{ routes.directory[$i18n.locale] }}</span>
-      </div>
-    </div>
+        <li>
+          <div class="flex items-center">
+            <router-link
+              :to="{ name: 'home' }"
+              class="mr-2 text-sm font-medium text-gray-900"
+              >Main</router-link
+            >
+            <svg
+              width="16"
+              height="20"
+              viewBox="0 0 16 20"
+              fill="currentColor"
+              aria-hidden="true"
+              class="h-5 w-4 text-gray-300"
+            >
+              <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+            </svg>
+          </div>
+        </li>
+        <li class="text-sm">
+          <span class="font-medium text-gray-500 hover:text-gray-600">{{
+            routes.directory[$i18n.locale]
+          }}</span>
+        </li>
+      </ol>
+    </nav>
   </div>
 </template>
 
