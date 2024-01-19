@@ -48,9 +48,6 @@ const productImages = ref(filterProductImage(props.images));
 function filterProductImage(value) {
   if (value && !!value.length) {
     value = value.map((image) => {
-      console.log(
-        `${process.env.VUE_APP_STORAGE_BACK_URL}${image.picture_url}`
-      );
       return {
         ...image,
         picture_url: `${process.env.VUE_APP_STORAGE_BACK_URL}${image.picture_url}`,
@@ -66,7 +63,6 @@ function filterProductImage(value) {
 watch(
   () => props.images,
   (newValue) => {
-    console.log(newValue);
     productImages.value = filterProductImage(newValue);
   }
 );

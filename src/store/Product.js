@@ -5,10 +5,36 @@ export const useProductStore = defineStore("productStore", {
   id: "product",
   state: () => ({
     product: [],
+    saleProducts: [],
+    productsByCategories: [],
     products: [],
     filters: [],
   }),
   actions: {
+    async fetchProductsBySalesForSlider() {
+      this.saleProducts = [];
+      try {
+        const response = await axios.get(
+          `${process.env.VUE_APP_BACK_URL}api/products/sales`
+        );
+        this.saleProducts = response.data.products;
+      } catch (e) {
+        this.saleProducts = [];
+        console.error(e); // Use console.error for errors
+      }
+    },
+    async fetchProductsByCategoryForSlider() {
+      this.productsByCategories = [];
+      try {
+        const response = await axios.get(
+          `${process.env.VUE_APP_BACK_URL}api/products/categories`
+        );
+        this.productsByCategories = response.data.categories;
+      } catch (e) {
+        this.productsByCategories = [];
+        console.error(e); // Use console.error for errors
+      }
+    },
     async fetchProductsByCategory(category, qs) {
       this.products = [];
       try {
